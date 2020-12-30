@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import hashlib
-import json
 import logging
-from .request import RequestApi
-from .exceptions import ApiError, WrongId, HttpError
+
 from .customers import Customers
 from .orders import Orders
+from .request import RequestApi
 from .users import Users
 
 logger = logging.getLogger(__name__)
