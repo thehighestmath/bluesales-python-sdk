@@ -1,7 +1,7 @@
-from .request import RequestApi
+# -*- coding: utf-8 -*-
+from bluesalespy.request import RequestApi
 
 
-class Customers:
+class OrdersAPI:
     def __init__(self, request_api: RequestApi):
         self.request_api = request_api
-

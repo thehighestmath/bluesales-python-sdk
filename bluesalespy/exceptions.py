@@ -7,3 +7,7 @@ class HttpError(Exception):
 
 class WrongLoginOrPassword(Exception):
     pass
+
+
+class TooLargeBoarders(Exception):
+    pass

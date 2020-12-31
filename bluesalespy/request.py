@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
+import time
 
 import requests
 
-from .exceptions import HttpError
+from .exceptions import HttpError, WrongLoginOrPassword
 
 
 class RequestApi:
@@ -25,5 +26,19 @@ class RequestApi:
             raise HttpError('Error with connection to bluesales.ru API server')
         if result.status_code == 404:
             raise HttpError(f'Method {method} not found!')
-        return json.loads(result.text)
-
+        response = json.loads(result.text)
+        if 'isValid' in response and not response['isValid']:
+            if 'error' in response:
+                if response['error'] == 'Неправильный логин или пароль.':
+                    raise WrongLoginOrPassword(response['error'])
+                if 'Другой пользователь находится онлайн под логином' in response['error']:
+                    error: str = response['error']
+                    p1 = "<span class='countdown'>"
+                    i1 = error.index(p1)
+                    p2 = "</span>"
+                    i2 = error.index(p2)
+                    delay = int(error[i1 + len(p1):i2])
+                    time.sleep(delay + 1)
+                    return self.send(method, data)
+            raise Exception(response)
+        return response
