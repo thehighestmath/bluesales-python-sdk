@@ -1,4 +1,5 @@
 # bluesales-python-sdk
+Development branch: https://github.com/thehighestmath/bluesales-python-sdk/tree/customersAPI
 
 _Hint: Для того, чтобы BlueSales API работало вы **должны** иметь PRO акканут_
 
