@@ -30,6 +30,26 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+#### Для использования необходим python3.8
+
+## Что необходимо для использования SDK
+
+_unix script_
+
+    git clone git@github.com:thehighestmath/bluesales-python-sdk.git
+    cd bluesales-python-sdk
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+Для декактивации виртуального окружени
+    
+    deactivate
+
+(опционально)
+    
+    sudo apt-get install python3-venv 
+
 
 ## Методы
 - Получение списка клиентов (метод customers.get) 
