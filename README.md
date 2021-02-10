@@ -1,5 +1,4 @@
 # bluesales-python-sdk
-Development branch: https://github.com/thehighestmath/bluesales-python-sdk/tree/customersAPI
 
 _Hint: Для того, чтобы BlueSales API работало вы **должны** иметь PRO акканут_
 
@@ -14,18 +13,11 @@ from bluesalespy import BlueSales
 
 def main():
     blue_sales = BlueSales('login', 'password')
-    response = blue_sales.customers.get(
-        first_contact_date_from=datetime(year=2020, month=12, day=31),
-        first_contact_date_to=datetime(year=2020, month=12, day=31),
-        count=500, offset=0
+    response = blue_sales.customers.get_all(
+        first_contact_date_from=datetime(year=2021, month=2, day=1),
+        first_contact_date_to=datetime(year=2021, month=2, day=28),
     )
     print(response)
-    print(response.count)
-    print(response.not_returned_count)
-    for customer in response.customers:
-        print(customer.id)
-        print(customer.vk.id)
-        print(customer.manager.full_name)
 
 
 if __name__ == '__main__':
