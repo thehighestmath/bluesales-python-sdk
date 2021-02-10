@@ -2,6 +2,8 @@
 from datetime import datetime, timedelta
 from typing import List
 
+from progress.bar import Bar as Bar
+
 from .exceptions import TooLargeBoarders
 from .methods import OrdersMethods
 from .request import RequestApi
@@ -57,9 +59,46 @@ class OrdersAPI:
 
         return OrdersResponse(response)
 
+    def get_all(
+            self,
+            date_from: datetime = None,
+            date_to: datetime = None,
+            order_statuses: list = None,
+            ids: List[int] = None,
+            internal_numbers: List[int] = None,
+            customer_id: int = None,
+    ) -> List[dict]:
+
+        items = []
+        count = MAX_COUNT_CUSTOMERS_PER_REQUEST
+        offset = 0
+
+        r = self.get(
+            date_from, date_to, order_statuses,
+            ids, internal_numbers, customer_id,
+            count=1, offset=0
+        )
+        total_count = r.not_returned_count + r.count
+
+        with Bar(f'Получение всех заказов из {self.request_api.login} аккаунта',
+                 max=total_count, fill='█', empty_fill='░') as bar:
+            while len(items) < total_count:
+                r = self.get(
+                    date_from, date_to, order_statuses,
+                    ids, internal_numbers, customer_id,
+                    count, offset
+                )
+                items.extend(r.orders)
+                offset += count
+                bar.next(r.count)
+        return items
+
 
 class OrdersResponse:
     def __init__(self, response: dict):
+        self.count: int = response['count']
+        self.not_returned_count: int = response['notReturnedCount']
+        self.orders: list = response['orders']
         self.response: dict = response
 
     def __repr__(self):

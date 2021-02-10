@@ -14,6 +14,10 @@ class RequestApi:
         self.__login = login
         self.__password = password_hash
 
+    @property
+    def login(self):
+        return self.__login
+
     def send(self, method, data=None):
         payload = {
             'login': self.__login,
@@ -38,6 +42,7 @@ class RequestApi:
                     p2 = "</span>"
                     i2 = error.index(p2)
                     delay = int(error[i1 + len(p1):i2])
+                    print(f'Другой пользователь находится онлайн. Засыпаю на {delay + 1}')
                     time.sleep(delay + 1)
                     return self.send(method, data)
             raise Exception(response)
