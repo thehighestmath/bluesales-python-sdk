@@ -103,7 +103,10 @@ class CustomersAPI:
             tags=tags, managers=managers, sources=sources, phone=phone
         )
         total_count = r.not_returned_count + r.count
-
+        
+        if total_count == 0:
+            return [] 
+        
         with Bar(f'Получение всех клиентов из {self.request_api.login} аккаунта',
                  max=total_count, fill='█', empty_fill='░') as bar:
             while len(items) < total_count:
