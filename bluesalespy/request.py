@@ -4,7 +4,7 @@ import time
 
 import requests
 
-from .exceptions import HttpError, WrongLoginOrPassword
+from .exceptions import HttpError, WrongLoginOrPassword, BlueSalesError
 
 
 class RequestApi:
@@ -45,5 +45,5 @@ class RequestApi:
                     print(f'Другой пользователь находится онлайн. Засыпаю на {delay + 1}')
                     time.sleep(delay + 1)
                     return self.send(method, data)
-            raise Exception(response)
+            raise BlueSalesError(f'{self.__login} | {response}')
         return response

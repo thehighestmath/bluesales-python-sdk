@@ -15,7 +15,6 @@ def get_hash(password):
 
 
 class BlueSales:
-
     def __init__(self, login: str, password: str):
         self.login: str = login
         self.__password: str = get_hash(password)

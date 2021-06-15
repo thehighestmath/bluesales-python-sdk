@@ -80,7 +80,10 @@ class OrdersAPI:
         )
         total_count = r.not_returned_count + r.count
 
-        with Bar(f'Получение всех заказов из {self.request_api.login} аккаунта',
+        if total_count == 0:
+            return []
+
+        with Bar(f'Orders | {self.request_api.login}',
                  max=total_count, fill='█', empty_fill='░') as bar:
             while len(items) < total_count:
                 r = self.get(

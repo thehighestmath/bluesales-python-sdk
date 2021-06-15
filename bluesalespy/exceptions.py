@@ -11,3 +11,7 @@ class WrongLoginOrPassword(Exception):
 
 class TooLargeBoarders(Exception):
     pass
+
+
+class BlueSalesError(Exception):
+    pass
