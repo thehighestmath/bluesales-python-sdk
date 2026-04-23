@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_hash(password: str) -> str:
-    return hashlib.md5(password.encode('utf-8')).hexdigest().upper()
+    return hashlib.md5(password.encode("utf-8")).hexdigest().upper()
 
 
 class BlueSales:

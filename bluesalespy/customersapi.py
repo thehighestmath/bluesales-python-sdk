@@ -7,7 +7,7 @@ from bluesalespy.methods import CustomersMethods
 from bluesalespy.models import CustomersResponse
 from bluesalespy.request import RequestApi
 
-_MSK = ZoneInfo('Europe/Moscow')
+_MSK = ZoneInfo("Europe/Moscow")
 _EPOCH = datetime(2020, 1, 1, tzinfo=_MSK)
 MAX_COUNT_CUSTOMERS_PER_REQUEST = 500
 
@@ -62,19 +62,19 @@ class CustomersAPI:
         """
         if count > MAX_COUNT_CUSTOMERS_PER_REQUEST:
             raise TooLargeBoarders(
-                f'count должен быть не больше {MAX_COUNT_CUSTOMERS_PER_REQUEST}, получил {count}'
+                f"count должен быть не больше {MAX_COUNT_CUSTOMERS_PER_REQUEST}, получил {count}"
             )
 
-        tags_out = [{'name': name} for name in (tags or [])]
+        tags_out = [{"name": name} for name in (tags or [])]
 
         managers_out: list[dict] = []
         for manager in managers or []:
             if isinstance(manager, int):
-                managers_out.append({'id': manager})
+                managers_out.append({"id": manager})
             elif isinstance(manager, str):
-                managers_out.append({'login': manager})
+                managers_out.append({"login": manager})
             else:
-                raise TypeError(f'Ожидалось int или str, получил {type(manager)}')
+                raise TypeError(f"Ожидалось int или str, получил {type(manager)}")
 
         if is_right_enabled:
             if first_contact_date_to:
@@ -85,29 +85,29 @@ class CustomersAPI:
                 last_contact_date_to += timedelta(days=1)
 
         def _fmt(dt: datetime | None) -> str | None:
-            return dt.strftime('%Y-%m-%d') if dt else None
+            return dt.strftime("%Y-%m-%d") if dt else None
 
         data = {
-            'firstContactDateFrom': _fmt(first_contact_date_from),
-            'firstContactDateTill': _fmt(first_contact_date_to),
-            'nextContactDateFrom': _fmt(next_contact_date_from),
-            'nextContactDateTill': _fmt(next_contact_date_to),
-            'lastContactDateFrom': _fmt(last_contact_date_from),
-            'lastContactDateTill': _fmt(last_contact_date_to),
-            'ids': ids,
-            'vkIds': vk_ids,
-            'pageSize': count,
-            'startRowNumber': offset,
-            'tags': tags_out,
-            'managers': managers_out,
-            'sources': sources,
-            'phone': phone,
+            "firstContactDateFrom": _fmt(first_contact_date_from),
+            "firstContactDateTill": _fmt(first_contact_date_to),
+            "nextContactDateFrom": _fmt(next_contact_date_from),
+            "nextContactDateTill": _fmt(next_contact_date_to),
+            "lastContactDateFrom": _fmt(last_contact_date_from),
+            "lastContactDateTill": _fmt(last_contact_date_to),
+            "ids": ids,
+            "vkIds": vk_ids,
+            "pageSize": count,
+            "startRowNumber": offset,
+            "tags": tags_out,
+            "managers": managers_out,
+            "sources": sources,
+            "phone": phone,
         }
         response = self.request_api.send(CustomersMethods.get, data=data)
         return CustomersResponse(
-            count=response['count'],
-            not_returned_count=response['notReturnedCount'],
-            customers=response['customers'],
+            count=response["count"],
+            not_returned_count=response["notReturnedCount"],
+            customers=response["customers"],
             response=response,
         )
 
@@ -235,7 +235,8 @@ class CustomersAPI:
             days_count = 7
             query = dict(
                 first_contact_date_from=first_contact_date_from,
-                first_contact_date_to=first_contact_date_to - timedelta(days=days_count),
+                first_contact_date_to=first_contact_date_to
+                - timedelta(days=days_count),
                 next_contact_date_from=next_contact_date_from,
                 next_contact_date_to=next_contact_date_to,
                 last_contact_date_from=last_contact_date_from,
@@ -346,4 +347,4 @@ class CustomersAPI:
         Args:
             customer_id: id клиента в BlueSales.
         """
-        return self.request_api.send(CustomersMethods.delete, data={'id': customer_id})
+        return self.request_api.send(CustomersMethods.delete, data={"id": customer_id})

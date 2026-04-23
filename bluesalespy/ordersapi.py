@@ -45,33 +45,35 @@ class OrdersAPI:
         """
         if count > MAX_COUNT_ORDERS_PER_REQUEST:
             raise TooLargeBoarders(
-                f'count должен быть не больше {MAX_COUNT_ORDERS_PER_REQUEST}, получил {count}'
+                f"count должен быть не больше {MAX_COUNT_ORDERS_PER_REQUEST}, получил {count}"
             )
 
         out_statuses: list[dict] = []
         for status in order_statuses or []:
             if isinstance(status, int):
-                out_statuses.append({'id': status})
+                out_statuses.append({"id": status})
             elif isinstance(status, str):
-                out_statuses.append({'name': status})
+                out_statuses.append({"name": status})
             else:
-                raise TypeError(f'Ожидалось int или str, получил {type(status)}')
+                raise TypeError(f"Ожидалось int или str, получил {type(status)}")
 
         data = {
-            'dateFrom': date_from.strftime('%Y-%m-%d') if date_from else None,
-            'dateTill': (date_to + timedelta(days=1)).strftime('%Y-%m-%d') if date_to else None,
-            'orderStatuses': out_statuses,
-            'customerId': customer_id,
-            'ids': ids,
-            'internalNumbers': internal_numbers,
-            'pageSize': count,
-            'startRowNumber': offset,
+            "dateFrom": date_from.strftime("%Y-%m-%d") if date_from else None,
+            "dateTill": (date_to + timedelta(days=1)).strftime("%Y-%m-%d")
+            if date_to
+            else None,
+            "orderStatuses": out_statuses,
+            "customerId": customer_id,
+            "ids": ids,
+            "internalNumbers": internal_numbers,
+            "pageSize": count,
+            "startRowNumber": offset,
         }
         response = self.request_api.send(OrdersMethods.get, data=data)
         return OrdersResponse(
-            count=response['count'],
-            not_returned_count=response['notReturnedCount'],
-            orders=response['orders'],
+            count=response["count"],
+            not_returned_count=response["notReturnedCount"],
+            orders=response["orders"],
             response=response,
         )
 
@@ -91,8 +93,14 @@ class OrdersAPI:
         """
         count = MAX_COUNT_ORDERS_PER_REQUEST
         probe = self.get(
-            date_from, date_to, order_statuses, ids, internal_numbers, customer_id,
-            count=1, offset=0,
+            date_from,
+            date_to,
+            order_statuses,
+            ids,
+            internal_numbers,
+            customer_id,
+            count=1,
+            offset=0,
         )
         total_count = probe.not_returned_count + probe.count
         if total_count == 0:
@@ -102,8 +110,14 @@ class OrdersAPI:
         offset = 0
         while len(items) < total_count:
             r = self.get(
-                date_from, date_to, order_statuses, ids, internal_numbers, customer_id,
-                count, offset,
+                date_from,
+                date_to,
+                order_statuses,
+                ids,
+                internal_numbers,
+                customer_id,
+                count,
+                offset,
             )
             items.extend(r.orders)
             offset += count
@@ -139,10 +153,10 @@ class OrdersAPI:
             Обновлённый заказ.
         """
         data = {
-            'id': order_id,
-            'orderStatus': order_status,
-            'postTrackingNumber': post_tracking_number,
-            'postStatus': post_status,
+            "id": order_id,
+            "orderStatus": order_status,
+            "postTrackingNumber": post_tracking_number,
+            "postStatus": post_status,
         }
         return self.request_api.send(OrdersMethods.set_status, data=data)
 
@@ -176,14 +190,12 @@ class OrdersAPI:
             )
         """
         data: dict = {
-            'ids': ids,
-            'prepay': prepay,
-            'prepayComments': prepay_comments,
-            'paymentType': {'id': payment_type_id} if payment_type_id else None,
-            'prepayDate': prepay_date,
+            "ids": ids,
+            "prepay": prepay,
+            "prepayComments": prepay_comments,
+            "paymentType": {"id": payment_type_id} if payment_type_id else None,
+            "prepayDate": prepay_date,
         }
         if extra:
             data.update(extra)
         return self.request_api.send(OrdersMethods.update_many, data=data)
-
-

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 # Ответы API
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class CustomersResponse:
     """Ответ на запрос customers.get."""
@@ -17,8 +18,8 @@ class CustomersResponse:
 
     def __repr__(self) -> str:
         return (
-            f'CustomersResponse(count={self.count}, '
-            f'not_returned_count={self.not_returned_count})'
+            f"CustomersResponse(count={self.count}, "
+            f"not_returned_count={self.not_returned_count})"
         )
 
 
@@ -33,14 +34,15 @@ class OrdersResponse:
 
     def __repr__(self) -> str:
         return (
-            f'OrdersResponse(count={self.count}, '
-            f'not_returned_count={self.not_returned_count})'
+            f"OrdersResponse(count={self.count}, "
+            f"not_returned_count={self.not_returned_count})"
         )
 
 
 # ---------------------------------------------------------------------------
 # Входные модели
 # ---------------------------------------------------------------------------
+
 
 @dataclass(kw_only=True)
 class Customer:
@@ -70,11 +72,11 @@ class Customer:
 
     # --- Основная информация ---
     full_name: str | None = None
-    birthday: str | None = None         # 'YYYY-MM-DD' или 'DD.MM.YYYY'
-    sex: str | None = None              # 'male' / 'female'
+    birthday: str | None = None  # 'YYYY-MM-DD' или 'DD.MM.YYYY'
+    sex: str | None = None  # 'male' / 'female'
 
     # --- Контактные данные ---
-    phone: str | None = None            # только цифры, напр. '79161234567'
+    phone: str | None = None  # только цифры, напр. '79161234567'
     email: str | None = None
     address: str | None = None
     other_contacts: str | None = None
@@ -94,7 +96,7 @@ class Customer:
     instagram_login: str | None = None
 
     # --- WhatsApp ---
-    whatsapp_id: str | None = None      # номер в формате '79161234567'
+    whatsapp_id: str | None = None  # номер в формате '79161234567'
 
     # --- Telegram ---
     telegram_id: str | None = None
@@ -128,70 +130,70 @@ class Customer:
         d: dict = {}
 
         if self.customer_id is not None:
-            d['id'] = self.customer_id
+            d["id"] = self.customer_id
         if self.full_name is not None:
-            d['fullName'] = self.full_name
+            d["fullName"] = self.full_name
         if self.birthday is not None:
-            d['birthday'] = self.birthday
+            d["birthday"] = self.birthday
         if self.sex is not None:
-            d['sex'] = self.sex
+            d["sex"] = self.sex
         if self.phone is not None:
-            d['phone'] = self.phone
+            d["phone"] = self.phone
         if self.email is not None:
-            d['email'] = self.email
+            d["email"] = self.email
         if self.address is not None:
-            d['address'] = self.address
+            d["address"] = self.address
         if self.other_contacts is not None:
-            d['otherContacts'] = self.other_contacts
+            d["otherContacts"] = self.other_contacts
         if self.country is not None:
-            d['country'] = {'name': self.country}
+            d["country"] = {"name": self.country}
         if self.city is not None:
-            d['city'] = {'name': self.city}
+            d["city"] = {"name": self.city}
         if self.vk_id is not None:
-            d['vk'] = {'id': self.vk_id, 'name': ''}
+            d["vk"] = {"id": self.vk_id, "name": ""}
         if self.ok_id is not None:
-            d['ok'] = {'id': self.ok_id, 'name': ''}
+            d["ok"] = {"id": self.ok_id, "name": ""}
         if self.instagram_id is not None:
-            d['instagram'] = {
-                'id': self.instagram_id,
-                'login': self.instagram_login or '',
+            d["instagram"] = {
+                "id": self.instagram_id,
+                "login": self.instagram_login or "",
             }
         if self.whatsapp_id is not None:
-            d['whatsApp'] = {'id': self.whatsapp_id}
+            d["whatsApp"] = {"id": self.whatsapp_id}
         if self.telegram_id is not None:
-            d['telegram'] = {
-                'id': self.telegram_id,
-                'name': self.telegram_name or '',
-                'login': self.telegram_login or '',
+            d["telegram"] = {
+                "id": self.telegram_id,
+                "name": self.telegram_name or "",
+                "login": self.telegram_login or "",
             }
         if self.facebook_id is not None:
-            d['facebook'] = {
-                'id': self.facebook_id,
-                'name': self.facebook_name or '',
+            d["facebook"] = {
+                "id": self.facebook_id,
+                "name": self.facebook_name or "",
             }
         if self.crm_status is not None:
-            d['crmStatus'] = {'name': self.crm_status}
+            d["crmStatus"] = {"name": self.crm_status}
         if self.first_contact_date is not None:
-            d['firstContactDate'] = self.first_contact_date
+            d["firstContactDate"] = self.first_contact_date
         if self.next_contact_date is not None:
-            d['nextContactDate'] = self.next_contact_date
+            d["nextContactDate"] = self.next_contact_date
         if self.source is not None:
-            d['source'] = {'name': self.source, 'autoCreate': self.source_auto_create}
+            d["source"] = {"name": self.source, "autoCreate": self.source_auto_create}
         if self.sales_channel is not None:
-            d['salesChannel'] = {'name': self.sales_channel}
+            d["salesChannel"] = {"name": self.sales_channel}
         if self.manager_login is not None or self.manager_name is not None:
-            d['manager'] = {
-                'login': self.manager_login or '',
-                'name': self.manager_name or '',
+            d["manager"] = {
+                "login": self.manager_login or "",
+                "name": self.manager_name or "",
             }
         if self.short_notes is not None:
-            d['shortNotes'] = self.short_notes
+            d["shortNotes"] = self.short_notes
         if self.comments is not None:
-            d['comments'] = self.comments
+            d["comments"] = self.comments
         if self.tag_ids is not None:
-            d['tags'] = [{'id': tag_id} for tag_id in self.tag_ids]
+            d["tags"] = [{"id": tag_id} for tag_id in self.tag_ids]
         if self.custom_fields is not None:
-            d['customFields'] = self.custom_fields
+            d["customFields"] = self.custom_fields
 
         return d
 
@@ -219,12 +221,12 @@ class Order:
     """
 
     customer_id: int | None = None
-    date: str | None = None                 # 'YYYY-MM-DD'
-    order_status: str | None = None         # по имени
-    order_status_id: int | None = None      # по id (приоритет над order_status)
+    date: str | None = None  # 'YYYY-MM-DD'
+    order_status: str | None = None  # по имени
+    order_status_id: int | None = None  # по id (приоритет над order_status)
     total: float | None = None
     prepay: float | None = None
-    prepay_date: str | None = None          # 'YYYY-MM-DD'
+    prepay_date: str | None = None  # 'YYYY-MM-DD'
     delivery_address: str | None = None
     comments: str | None = None
     manager_id: int | None = None
@@ -236,28 +238,28 @@ class Order:
         d: dict = {}
 
         if self.customer_id is not None:
-            d['customerId'] = self.customer_id
+            d["customerId"] = self.customer_id
         if self.date is not None:
-            d['date'] = self.date
+            d["date"] = self.date
         if self.order_status_id is not None:
-            d['orderStatus'] = {'id': self.order_status_id}
+            d["orderStatus"] = {"id": self.order_status_id}
         elif self.order_status is not None:
-            d['orderStatus'] = {'name': self.order_status}
+            d["orderStatus"] = {"name": self.order_status}
         if self.total is not None:
-            d['sum'] = self.total
+            d["sum"] = self.total
         if self.prepay is not None:
-            d['prepay'] = self.prepay
+            d["prepay"] = self.prepay
         if self.prepay_date is not None:
-            d['prepayDate'] = self.prepay_date
+            d["prepayDate"] = self.prepay_date
         if self.delivery_address is not None:
-            d['deliveryAddress'] = self.delivery_address
+            d["deliveryAddress"] = self.delivery_address
         if self.comments is not None:
-            d['comments'] = self.comments
+            d["comments"] = self.comments
         if self.manager_id is not None:
-            d['manager'] = {'id': self.manager_id}
+            d["manager"] = {"id": self.manager_id}
         if self.payment_type_id is not None:
-            d['paymentType'] = {'id': self.payment_type_id}
+            d["paymentType"] = {"id": self.payment_type_id}
         if self.custom_fields is not None:
-            d['customFields'] = self.custom_fields
+            d["customFields"] = self.custom_fields
 
         return d

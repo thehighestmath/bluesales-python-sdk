@@ -22,7 +22,7 @@ class TagsAPI:
             bs.tags.add('VIP', add_to_beginning=True)
         """
         data = {
-            'name': name,
-            'addToBeginning': add_to_beginning,
+            "name": name,
+            "addToBeginning": add_to_beginning,
         }
         return self.request_api.send(TagsMethods.add, data=data)
