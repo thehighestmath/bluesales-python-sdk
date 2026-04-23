@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'thehighestmath'
-__version__ = '0.1.0'
+__version__ = '2.0.0'
 __api_version__ = '1.0'
 
-from .bluesales import BlueSales
-# from .exceptions import HttpError, WrongSecret, WrongId, ApiError
+from bluesalespy.bluesales import BlueSales
+from bluesalespy.exceptions import BlueSalesError, HttpError, TooLargeBoarders, WrongLoginOrPassword
+from bluesalespy.models import Customer, CustomersResponse, Order, OrdersResponse

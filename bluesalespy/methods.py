@@ -19,3 +19,7 @@ class OrdersMethods:
 
 class UsersMethods:
     get = 'users.get'
+
+
+class TagsMethods:
+    add = 'tags.add'
