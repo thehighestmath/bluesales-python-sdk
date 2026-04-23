@@ -254,7 +254,9 @@ class Order:
             "deliveryAddress": self.delivery_address,
             "comments": self.comments,
             "manager": {"id": self.manager_id} if self.manager_id is not None else None,
-            "paymentType": {"id": self.payment_type_id} if self.payment_type_id is not None else None,
+            "paymentType": {"id": self.payment_type_id}
+            if self.payment_type_id is not None
+            else None,
             "customFields": self.custom_fields,
         }
         return {k: v for k, v in raw.items() if v is not None}

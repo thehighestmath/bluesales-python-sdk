@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from enum import StrEnum
 
 
-class CustomersMethods:
+class CustomersMethods(StrEnum):
     get = "customers.get"
     add = "customers.add"
     update = "customers.update"
@@ -10,16 +11,16 @@ class CustomersMethods:
     delete = "customers.delete"
 
 
-class OrdersMethods:
+class OrdersMethods(StrEnum):
     get = "orders.get"
     add = "orders.add"
     update_many = "orders.updateMany"
     set_status = "orders.setStatus"
 
 
-class UsersMethods:
+class UsersMethods(StrEnum):
     get = "users.get"
 
 
-class TagsMethods:
+class TagsMethods(StrEnum):
     add = "tags.add"
