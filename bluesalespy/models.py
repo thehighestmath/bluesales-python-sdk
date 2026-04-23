@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from dataclasses import dataclass
+from typing import Any
 
 
 # ---------------------------------------------------------------------------
@@ -235,31 +236,25 @@ class Order:
 
     def to_dict(self) -> dict:
         """Преобразовать в словарь формата BlueSales API (camelCase, без None-полей)."""
-        d: dict = {}
-
-        if self.customer_id is not None:
-            d["customerId"] = self.customer_id
-        if self.date is not None:
-            d["date"] = self.date
+        status: dict[str, Any] | None
         if self.order_status_id is not None:
-            d["orderStatus"] = {"id": self.order_status_id}
+            status = {"id": self.order_status_id}
         elif self.order_status is not None:
-            d["orderStatus"] = {"name": self.order_status}
-        if self.total is not None:
-            d["sum"] = self.total
-        if self.prepay is not None:
-            d["prepay"] = self.prepay
-        if self.prepay_date is not None:
-            d["prepayDate"] = self.prepay_date
-        if self.delivery_address is not None:
-            d["deliveryAddress"] = self.delivery_address
-        if self.comments is not None:
-            d["comments"] = self.comments
-        if self.manager_id is not None:
-            d["manager"] = {"id": self.manager_id}
-        if self.payment_type_id is not None:
-            d["paymentType"] = {"id": self.payment_type_id}
-        if self.custom_fields is not None:
-            d["customFields"] = self.custom_fields
+            status = {"name": self.order_status}
+        else:
+            status = None
 
-        return d
+        raw: dict[str, Any] = {
+            "customerId": self.customer_id,
+            "date": self.date,
+            "orderStatus": status,
+            "sum": self.total,
+            "prepay": self.prepay,
+            "prepayDate": self.prepay_date,
+            "deliveryAddress": self.delivery_address,
+            "comments": self.comments,
+            "manager": {"id": self.manager_id} if self.manager_id is not None else None,
+            "paymentType": {"id": self.payment_type_id} if self.payment_type_id is not None else None,
+            "customFields": self.custom_fields,
+        }
+        return {k: v for k, v in raw.items() if v is not None}

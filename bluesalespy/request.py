@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import time
+from typing import Any
 
 import requests
 
@@ -18,7 +19,7 @@ class RequestApi:
     def login(self) -> str:
         return self.__login
 
-    def send(self, method: str, data: dict | list | None = None) -> dict | list:
+    def send(self, method: str, data: dict | list | None = None) -> Any:
         """Отправить запрос к API.
 
         Args:

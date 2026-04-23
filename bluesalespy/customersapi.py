@@ -2,6 +2,8 @@
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+from typing import Any
+
 from bluesalespy.exceptions import TooLargeBoarders
 from bluesalespy.methods import CustomersMethods
 from bluesalespy.models import CustomersResponse
@@ -113,8 +115,8 @@ class CustomersAPI:
 
     def get_all_with_step(
         self,
-        first_contact_date_from: datetime | None = None,
-        first_contact_date_to: datetime | None = None,
+        first_contact_date_from: datetime,
+        first_contact_date_to: datetime,
         next_contact_date_from: datetime | None = None,
         next_contact_date_to: datetime | None = None,
         last_contact_date_from: datetime | None = None,
@@ -133,9 +135,9 @@ class CustomersAPI:
         count = MAX_COUNT_CUSTOMERS_PER_REQUEST
         current_date = first_contact_date_from
 
-        while current_date < first_contact_date_to:  # type: ignore[operator]
+        while current_date < first_contact_date_to:
             current_date_to = current_date + timedelta(days=days_count)
-            query = dict(
+            query: Any = dict(
                 first_contact_date_from=current_date,
                 first_contact_date_to=current_date_to,
                 next_contact_date_from=next_contact_date_from,
@@ -204,7 +206,7 @@ class CustomersAPI:
             first_contact_date_to = datetime.now(_MSK) + timedelta(days=1)
 
         if first_contact_date_from is None:
-            query = dict(
+            query: Any = dict(
                 first_contact_date_from=None,
                 first_contact_date_to=_EPOCH,
                 next_contact_date_from=next_contact_date_from,
